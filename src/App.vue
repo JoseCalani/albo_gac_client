@@ -1,15 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    
+  <div v-for="usuario in placeholders" v-bind:key="usuario.id_usuario">
+  <span>{{ usuario.id_usuario}}</span><button>
+  {{ usuario.nombres }}</button><br/>
+  </div>
+
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+  
+  },
+  data(){
+    return {
+      placeholders: []
+    }
+  },
+  methods: {
+    async getPlaceholders () {
+      const reponse = await axios.get('https://albo-gac-api.herokuapp.com/api/usuario/')
+      this.placeholders = reponse.data
+    }
+  },
+  created(){
+    this.getPlaceholders()
   }
 }
 </script>
